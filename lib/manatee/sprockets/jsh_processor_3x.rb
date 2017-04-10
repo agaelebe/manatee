@@ -31,7 +31,7 @@ module Manatee
 
         if env.respond_to?(:register_engine)
           args = ['.jsh', Manatee::Sprockets::JshProcessor]
-          args << { mime_type: 'application/javascript', silence_deprecation: true } if Sprockets::VERSION.start_with?("3")
+          args << { mime_type: 'application/javascript', silence_deprecation: true } if ::Sprockets::VERSION.start_with?("3")
           env.register_engine(*args)
         end
 
