@@ -5,4 +5,4 @@ elsif Sprockets::VERSION.match /\A2\./
 else
   raise 'Manatee requires Sprockets version 2.x or 3.x'
 end
-  
+

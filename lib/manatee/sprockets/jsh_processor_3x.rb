@@ -23,8 +23,18 @@ module Manatee
         'this.Renderer'
       end
 
-      def self.subscribe(environment)
-        environment.register_engine '.jsh', Manatee::Sprockets::JshProcessor, mime_type: 'application/javascript'
+      def self.subscribe(env)
+        if env.respond_to?(:register_transformer)
+          env.register_mime_type 'application/javascript', extensions: ['.jsh'], charset: :js
+          env.register_preprocessor 'application/javascript', Manatee::Sprockets::JshProcessor
+        end
+
+        if env.respond_to?(:register_engine)
+          args = ['.jsh', Manatee::Sprockets::JshProcessor]
+          args << { mime_type: 'application/javascript', silence_deprecation: true } if Sprockets::VERSION.start_with?("3")
+          env.register_engine(*args)
+        end
+
       end
     end
   end
